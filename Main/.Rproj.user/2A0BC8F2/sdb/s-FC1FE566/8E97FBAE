@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\\documentclass[12pt]{article}\n\\usepackage{mathtools,amssymb}%mathtools includes amsmath with improvements\n\\mathtoolsset{showonlyrefs}% number only those equations which has corresponding reference\n\\usepackage[makeroom]{cancel}% to use the cancel mark\n%\\usepackage{xcolor}% to change color of lineto package line no.\n%\\usepackage{lineto}\n%\\pagewiselinenumbers\n%\\renewcommand\\linenumberfont{\\color{white}\n%\\SweaveOpts{concordance=TRUE}\n\\begin{document}\n\n\\include{./time_series_VAR_1}\n\n\\end{document}",
+    "created" : 1473247665494.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4005222488",
+    "id" : "8E97FBAE",
+    "lastKnownWriteTime" : 1473247682,
+    "last_content_update" : -2147483648,
+    "path" : "~/Dropbox/Docs/rStuff/TimeSeries/Main/VAR/time_series_VAR_main.tex",
+    "project_path" : "VAR/time_series_VAR_main.tex",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "tex"
+}

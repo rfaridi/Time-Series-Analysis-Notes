@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\\section{VAR Introduction}\nDel Negro and Schorfheide (2011) mentioned \"At first glance, VARs appear to be starightforward multivariate generalizations of univariate autogregressive models. At second sight, they turn out to be one of the key empirical tools in modern macroeconomics.\"\n\n\\subsection{What are VARs}\nVARs are fundamentally simple multivariate time-series models which captures joint dynamics of multiple variables. In VAR, endogenous variables in the system are functions of lagged values of all endogenous variables. It offers simple and flexible alternative to the traditional multiple-equations model that were popular in 60s and 70s. \n\n\\subsection{Historical overview: Sims' Critique}\nAmerican economist Chris Sims first published his seminal paper on VAR titled \"Macroeconomics and its reality\" in Econometrica in 1980. It brought him Nobel prize in 2011 with Thomas Sargent for their contribution in understanding cause and effect in macroeconomics. \n\nChris sims in his paper strongly criticized the large-scale macro-econometric models of the time because they imposed  strict restrictions. These models made strong assumptions about the dynamic relationships among the variables. They were also criticized because they did not take account the fact that agent today take decision based on to-morrow's utility. \n\nTherefore he claimed that all the variables are endogenous. Thus Sims proposed an alternative where those strong assumptions are not imposed. According to a papaer by Sargent and Sims, this is macroeconomic modelling without too much a priori theory. \n\nBut we will see later that VAR is not entirely theory free when we discuss Structural VAR. But this structural VAR is far more clear than traditonal macroeconmetric model. \n\n\\subsection{What are VARs used for}\n\nVARs has been mainly used for two purposes:\n\nForecasting\n\nStructural analysis\n\nIn the case of forecasting, VARs provide most of the times superior forecast compared to univariate models or elaborate theory based macroeconometric models. And for this reduced form VARs are good enough. But for structural analysis, structural VARs are needed. Structural VARs can be used to trace the impact of a shock in the economy. It can be used as a benchmark to test against competing theories. It can also used to find the sources of business cycle fluctuations.\n\nRoad plan for rest of the analysis:\n\nSpecification and Estimation of reduced form VAR\n\nModel checking - diagnostic checking which may take serveral rounds before we find a statistically acceptable model\n\nWhen model is accepted we can use it for forecasting. \n\nThen we will also discuss Structural VAR specification and estimation where shocks to innovation will be analyzed in impusle-response analysis and will be also discussed Forecast-error variance decomposition. ",
+    "created" : 1473247560068.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2669351692",
+    "id" : "3E5A22DA",
+    "lastKnownWriteTime" : 1473251788,
+    "last_content_update" : -2147483648,
+    "path" : "~/Dropbox/Docs/rStuff/TimeSeries/Main/VAR/time_series_VAR_1.tex",
+    "project_path" : "VAR/time_series_VAR_1.tex",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "tex"
+}

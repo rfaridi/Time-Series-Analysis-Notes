@@ -1,0 +1,908 @@
+\documentclass[12pt]{book}
+\usepackage{mathtools,amssymb}%mathtools includes amsmath with improvements
+\mathtoolsset{showonlyrefs}% number only those equations which has corresponding reference
+\usepackage[makeroom]{cancel}% to use the cancel mark
+%\usepackage{xcolor}% to change color of lineto package line no.
+%\usepackage{lineto}
+%\pagewiselinenumbers
+%\renewcommand\linenumberfont{\color{white}
+%\SweaveOpts{concordance=TRUE}
+\begin{document}
+\part{Time Series in Verbeek}
+\chapter{Univariate Time Series}
+\section{Introduction}
+Following two sections will discuss stationary models in its simplest form.Then we will talk about non-stationary models. 
+\section{Autogregressive Models}
+We will start with the simplest form of time-series model which is called first-order autoregressive models or AR(1).
+\subsection{Specification}
+A simple way to model dependence between observations in different time periods would be that $Y_t$ depends linearly on the observation from the previous time period $Y_{t-1}$.
+			\begin{equation}\label{eq1}
+				Y_t=\alpha+\theta Y_{t-1}+\varepsilon_t
+			\end{equation}
+			Here $\varepsilon_t$ means serially uncorrelated innovation with mean of zero and a constant variance. The process in \eqref{eq1} is called a first order \textbf{autoregressive process} or 
+			$AR(1)$ process. This process tells us that the value of Y at time $t$ depends on a constant term plus $\theta$ times plus an unpredictable component $\varepsilon$. Here we shall assume $|\theta|<1$. Now, the unpredictable component $\varepsilon$ is an important aspect of the whole whole. The process underlying $\varepsilon_t$  called \textbf{white noies process}. Here $\varepsilon$ will be always homoskedastic and will not show any autocorrelation. 
+\subsection{Expected Value of AR(1)}
+	The expected value of $Y_t$ can be solved from 
+	\[E(Y_t)=\delta+\theta E(Y_{t-1})\]
+which, assuming that $E(Y_t)$ does not depend upon $t$, allows us to write 
+	\begin{equation*}
+		E(Y_t)=E(Y_{t-1})=\mu
+		\label{}
+	\end{equation*}
+Remember, this is only true if $Y_t$ is stationary, that means it's statistical property does not depend on a particular time period, in other words, the mean is constant. Now it follows that 
+		 \begin{gather*}
+			y_t+\mu=\delta+\theta (y_{t-1}+\mu)+\varepsilon \\
+			\intertext{In the above we have seen that} \\
+			\mu\equiv E(Y_t)=\frac{\delta}{(1-\theta)} \nonumber \\
+			\intertext{which means} \\
+			\delta=\mu (1-\theta) \\
+			\intertext{Now putting this value in the above equation} \\
+			y_t+\mu=\mu (1-\theta)+\theta y_{t-1}+\theta \mu+\varepsilon \\
+			y_t+\cancel{\mu}=\cancel{\mu}-\mu \theta+\theta y_{t-1}+\theta \mu+\varepsilon \\
+			y_t=\cancel{\mu \theta}+\theta y_{t-1}+\cancel{\theta \mu}+\varepsilon \\
+			y_t=\theta y_{t-1}+\varepsilon
+		\end{gather*}
+
+Verbeek saying that this version of the equation is more notationally convenient than the original one. I am not sure why he says that. It leaves out the intercept, is tha is the reason? I don't know. What's the mean of $y_t$?
+
+Taking expectation, we get :  \[
+	E(y_t)=\theta E(y_{t-1})+ E(\varepsilon)
+\]
+Since $E(\varepsilon)=0$ we can write \[
+	E(y_t)=\theta E(y_{t-1})
+\]
+Remember, previously we said that $Y_t$ is stationary and as a result $E(Y_t)=E(Y_{t-1})$
+Then we can write,
+\begin{gather*}
+	E(y_t+\mu)=E(y_{t-1}+\mu) \\
+	E(y_t)+E(\mu)=E(y_{t-1})+E(\mu) \\
+	\intertext{Since $\mu$ is a constant, $E(\mu)=\mu$} \\
+	E(y_t)+\cancel{\mu}=E(y_{t-1})+\cancel{\mu} \\
+	E(y_t)=E(y_{t-1}) \\
+	\intertext{Now from the above, we can write} \\
+	E(y_t)-\theta E(y_t)=0 \quad \text{since} \quad E(y_t)=E(y_{t-1}) \\
+	E(y_t)=0
+\end{gather*}
+
+Above results show that $y_t$ has a zero mean. But to have a non-zero mean we can add an intercept. We also here note that $V(Y_t)=V(y_t)$. The process described in \eqref{eq1} imposes certain restrictions on the stochastic process that generates $Y_t$. Usually when we have a group of variables, we usually describe their joint distribution by  covariances. Since, here are lagged version of other variables, we call it \texttt{autocovariances} . Author says dynamic properties of $Y_t$ can be derived if we assume that variances and autocovariances does not depend on $t$. There must be some proof of that but we are not going into that. This is the so called \texttt{stationarity} condition. So basically we require stationarity to derive dynamic properties of $Y_t$. And without deriving dynamic properties of $Y_t$, we can not forecast its values. 
+\subsection{Variance of AR(1)}
+Previously we derived the constant mean of the distribution by imposing that mean does not depend on $t$. Now we will do the same thing with variances. First let's derive the variance:
+\begin{equation*}
+	\begin{split}
+		Var(Y_t)&=Var(\delta+\theta Y_{t-1}+\varepsilon_t)\\
+		 &=Var(\delta)+Var(\theta Y_{t-1}+\varepsilon_t) \\
+		&=Var(\theta Y_{t-1}+\varepsilon_t) \quad \because \quad Var(\delta)=0\\
+		&=\theta^2 Var(Y_{t-1})+Var(\varepsilon_t) 
+	\end{split}
+\end{equation*}
+Therefore, we can write  
+	\begin{equation}\label{eqvar1}
+		Var(Y_t)=\theta^2 Var(Y_{t-1})+Var(\varepsilon_t) 	
+	\end{equation}
+Here we assume that $Cov(Y_{t-1} \varepsilon_t)=0$. Now, this is not too unrealistic in the sense that error at current period might not be correlated with the endogenous variable in the past.Now it's time to impose one of the stationarity condition, namely, variance of the time series process does not depend on time:
+	\begin{equation}\label{eqst}
+		Var(Y_t)=Var(Y_{t-1})
+	\end{equation}
+	Now using \eqref{eqvar1} and \eqref{eqst}, we can write 
+	\begin{gather}
+		Var(Y_t) =\theta^2 Var(Y_t)+ \sigma^2 \quad \text{by} \quad Var(Y_t)=\sigma^2\\
+		\text{or,} \quad Var(Y_t)(1-\theta^2) =\sigma^2\\
+		\text{or,} \quad Var(Y_t) =\frac{\sigma}{1-\theta^2} \label{eqvar2}
+	\end{gather}
+	We see from the equation \eqref{eqvar2} that $Var(Y_t)$ is indeed constant. We also see from \eqref{eqvar2} that we can only impose $Var(Y_t)=Var(Y_{t+1}$ if $|\theta|<1$ . This is the assumption we madel previously.This is actually the essence of \texttt{Dickey-Fuller} test which tests whether this coefficient is less than one or not. 
+\subsection{Covariances of AR(1)}	
+	Now let's find the $Covariance$ between $Y_t$ and $Y_t{t-1}$.
+	\begin{equation}
+		\begin{split}
+		Cov(Y_t,Y_{t-1}) & =E(Y_t-E(Y_t))E(Y_{t-1}-E(Y_{t-1}))\\
+		& =E((Y_t-\mu)(Y_{t-1}-\mu))\quad \because \quad E(Y_t)=E(Y_{t-1})=\mu\\
+		& =E(y_t\, y_{t-1})\quad \text{by the definition of $Y_t$}\\
+		& =E((\theta y_{t-1}+\varepsilon_t)y_{t-1})\\
+		& =\theta (E(y_{t-1})^2+E(\varepsilon_t y_{t-1})\\
+		& =\theta \, E(Y_{t-1}-\mu)^2+E(\varepsilon_t y_{t-1})\\
+		& =\theta \, Var(Y_t)+E((\varepsilon_t-E(\varepsilon_t)) (Y_{t-1}-\mu))\\
+		& =\theta \, Var(Y_t)+Cov(\varepsilon_t,Y_t)\\
+		& =\theta \, Var(Y_t)\quad \because \quad Cov(\varepsilon_t,Y_{t-1})=0
+		\end{split}
+		\label{eqcov}
+	\end{equation}
+So, we have established that 
+\begin{equation}
+	Cov(Y_t,Y_{t-1})=\theta \frac{\sigma^2}{1-\theta^2}
+	\label{eqcov2}
+\end{equation}
+
+Now let's take some higher order lags. Let's see what would be the covariance between $Y_t$ and $Y_{t-2}$, that is autocovariance of lag order 2.  
+
+
+\begin{equation}
+		\begin{split}
+		Cov(Y_t,Y_{t-2}) & =E(Y_t-E(Y_t))E(Y_{t-2}-E(Y_{t-2}))\\
+		& =E((Y_t-\mu)(Y_{t-2}-\mu))\quad \because \quad E(Y_t)=E(Y_{t-2})=\mu\\
+		& =E(y_t\, y_{t-2})\quad \text{by the definition of $Y_t$}\\
+\intertext{Before continuing we have to figure out $y_t$}\\
+		y_t & =\theta y_{t-1}+\varepsilon_t\\
+		& =\theta (\theta y_{t-2}+\varepsilon_{t-1})+\varepsilon_t\\
+		& =\theta^2 y_{t-2}+\theta \varepsilon_{t-1}+\varepsilon_t\\
+\intertext{Now,putting this value back in equation}
+		& =E((\theta^2 y_{t-2}+\theta \varepsilon_{t-1}+\varepsilon_t)y_{t-2})\\
+		& =\theta^2 (E(y_{t-2})^2+E(\varepsilon_{t-1} y_{t-2})+E(\varepsilon_t y_{t-2}))\\
+		& =\theta^2 \, E(Y_{t-2}-\mu)^2+Cov(\varepsilon_{t-1},y_{t-2})+Cov(\varepsilon_t,y_{t-2})\\
+		& =\theta^2 \, Var(Y_t)\quad \because \quad Cov(\varepsilon_t,Y_{t-k})=0\\
+		& =\theta^2 \, \frac{\sigma^2}{1-\theta^2}\\
+\intertext{Therefore we see that,}
+& Cov(Y_t,Y_{t-1}) =\theta \frac{\sigma^2}{1-\theta^2}\\
+& Cov(Y_t,Y_{t-2}) =\theta^2 \frac{\sigma^2}{1-\theta^2}\\
+\vdots\\
+& Cov(Y_t,Y_{t-k}) =\theta^k \frac{\sigma^2}{1-\theta^2}
+		\end{split}
+		\label{eqcovk}
+	\end{equation}
+	
+We have the following observation from the above Covariance formula:
+\begin{itemize}
+	\item As long as $\theta$ is non-zero, any two observation on $Y$ has non-zero correlation. This might imply that as long as $Y$ in period $t$ is correlated with it's immediate past value, that correlation carries through higher degree of past value.
+	\item Since the value of $|\theta|<1$, this correlation diminishes in higher degree of lag-order. This is quite intuitive as itis natural to have weakerza correlation among values whic are far apart. 
+	\item Covariance between any two time periods does not depend on any of the time periods.Rather it depends on how far they are apart, which is determined by $k$. This is one of the primary features of stationary time series. 	
+\end{itemize}
+\section{Moving Average Process}
+Another very simple time series model is moving average of order 1 or MA(1). This process is given by:
+			\begin{equation}
+				Y_t=\mu+\varepsilon_t+\alpha \varepsilon_{t-1}
+				\label{eqma1}
+			\end{equation}
+			In the equation \eqref{eqma1}, $Y_t$ is sum of constant mean plus weighted average of current and past error. Why this is called weighted average? I am not sure at this point. Usually weighted average is in the form of $\alpha \varepsilon+(1-\alpha) \varepsilon$ form. But in \eqref{eqma1}, it's not like that. I have to look further into it. Basically the values of $Y_t$ are defined in terms of drawings from White Noise processes $\varepsilon_t$. 
+\subsection{Mean of MA(1)}
+Mean of $MA(1)$ process is pretty simple: 
+		\begin{equation}
+			E(Y_t)=\mu \quad \because E(\varepsilon_t)=E(\varepsilon_{t-1})=0
+			\label{eqmma}
+		\end{equation}
+\subsection{Variance of MA(1)}
+		\begin{equation}
+			\begin{split}
+				Var(Y_t) & =E[Y_t-E(Y_t)]^2\\
+				& =E[\cancel{\mu}+\varepsilon_t+\alpha \varepsilon_{t-1}-\cancel{\mu}]^2\\
+				& =E(\varepsilon_t+\alpha \varepsilon_{t-1})^2\\
+				& =E(\varepsilon_t)^2+\alpha^2 E(\varepsilon_{t-1}^2)\\
+				& =\sigma^2+\alpha^2 \sigma^2\\ 
+				& =\sigma^2(1+\alpha^2)
+			\end{split}
+			\label{}
+		\end{equation}
+\subsection{Covariance of MA process}\label{sscovma}
+		\begin{equation}
+			\begin{split}
+			Cov(Y_t,Y_{t-1}) & = E[Y_t-E(Y_t)][Y_{t-1}-E(Y_{t-1})]\\
+			& = E(\varepsilon_t+\alpha \varepsilon_{t-1})(\varepsilon_{t-1}+\alpha \varepsilon_{t-2})\\
+			& =\alpha E(\varepsilon_{t-1}^2) \quad \because \quad Cov(\varepsilon_t,\varepsilon_{t-k})=0 \quad \forall \,t \quad \text{when} \quad k\neq 0\\ 
+			& = \alpha \sigma^2 \\
+			Cov(Y_t, Y_{t-2}) & = E[Y_t-E(Y_t)][Y_{t-2}-E(Y_{t-2})]\\
+			& = E(\varepsilon_t+\alpha \varepsilon_{t-1})(\varepsilon_{t-2}+\alpha \varepsilon_{t-3})\\
+			& = 0 \quad \because \text{all cross covariance of error terms are zero}\\ 
+			Similarly Cov(Y_t,Y_{t-k}) & = 0 \quad \forall \quad k\ge 2
+			\end{split}
+			\label{eqmacov}
+		\end{equation}
+
+The equation above implies that $AR(1)$ and $MA(1)$ has very different autocovariance structure. 
+
+\subsection{Comaring AR(1) and MA(1)}
+We can generalize $AR(1)$ and $MA(1)$ by adding additional lag terms. In general, there is little difference between these two models. We express$\mathbf{AR(1)}$  as$\mathbf{MA(1)}$ by repeated substitution.We can rewrite \texttt{AR(1)} as an infinite order of moving average. We can see this in the following:
+\begin{align}
+	Y_t &=\delta+\theta Y_{t-1}+\varepsilon \\
+	&=\delta+\theta [\delta+\theta Y_{t-2}+\varepsilon_{t-1}]+\varepsilon_t\\
+	&=\delta+\theta \delta+\theta^2 Y_{t-2}+\theta \varepsilon_{t-1}+\varepsilon_ti \label{del}\\
+\intertext{We also have previously found that}
+\mu &=\frac{\delta}{1-\theta}\\
+\text{or,}\quad \delta&=\mu (1-\theta)\\
+\intertext{Now putting this back into equation \eqref{del}}
+	&=\mu (1-\theta)+\theta \mu (1-\theta)+\theta^2 Y_{t-2}+\theta \varepsilon_{t-1}+\varepsilon_t\\
+	&=\mu - \cancel{\mu \theta}+ \cancel{\theta \mu} -\mu \theta^2+\theta^2 Y_{t-2}+\theta \varepsilon_{t-1}+\varepsilon_t\\
+	&=\mu+\theta^2(Y_{t-2}-\mu)+\theta \varepsilon_{t-1}+\varepsilon_t\\
+	\intertext{Similarly, by substituting for $Y_{t-2}$, we get}
+	&=\mu+\theta^3(Y_{t-3}-\mu)+\varepsilon_t+\varepsilon_t+\theta \varepsilon_{t-1}+\theta^2 \varepsilon_{t-2}\\
+	&\vdots\\
+	&=\mu+\theta^n(Y_{t-n}-\mu)+\sum_{j=0}^{n-1}\theta^j \varepsilon_{t-j}\\
+	\label{}
+\end{align}
+When $n\longrightarrow \infty$ and $\theta <1$ (remember the stationarity condition) , above equation boils down to 
+	<\begin{equation}
+		Y_t=\mu+\sum_{j=0}^{n-1}\theta^j \varepsilon_{t-j}\\
+		\label{eqtrar}
+	\end{equation}
+	In the same manner, we can try to see whether an \texttt{MA(1)} process can be transformed into some kind of \texttt{AR} process. 
+	\begin{align}
+		MA(1) & =\mu+\varepsilon_t+\varepsilon_{t-1}\\
+		& = \mu+Y_t-\delta - \theta Y_{t-1}+Y_{t-1}-\delta-\theta Y_{t-2} \\
+		&=\frac{\delta}{1-\theta}-2 \delta+(1-\theta)Y_{t-1}-\theta Y_{t-2} \\
+		&=\sigma_0+\sigma_1 Y_{t-1}+\sigma_2 Y_{t-2}
+		\label{}
+	\end{align}
+\section{Stationarity and the Autocorrelation Function}
+A stochastic process is said to be stationary if it's properties are unaffected by a change of time origin.Time origin might mean the particular time period which represents the time range. It might be the starting time period or the center value of time. In other words, joint probability distribution of any set of times does not change shape or affected by any means if there is a shift in the time axis. Why we talk about joint probability distribution here. This is because every value in every time period is a particular value of a random variable. For example, $Y_t$ is random variable, same as $Y_{t-1}$ is a random variable. When a time-series consists of these two variables, the distribution of this time series is a joint distribution.
+\subsection{Strict VS Weak Stationarity}
+Usually stationarity is a very strict condition which requires that the whole distribution must be unchanged at any time period. It means that all the moments in any order should be equal. But this is usually impractical to find. As a result, we impose a softer version of this \textbf{strict stationarity} which we call \textbf{weak stationarity}. Weak stationarity is a situation when we have just mean, variance are equal. We also have covariance which does not change we time difference between variables are the same. This means:
+		\begin{equation}
+			Cov(Y_1,Y_5)=Cov(Y_{17},Y_{21})
+			\label{eqeqcov}
+		\end{equation}
+ This is also called covariance stationary. We can formally express the covariance stationary in the following way:
+ 		\begin{align}
+			E(Y_t)&=\mu < \infty \label{eqm}\\ 
+			Var(Y_t)&=\sigma^2 \label{eqv}\\
+			Cov(Y_t,Y_{t-k})&=E[(Y_t-E(Y_{t-1}))(Y_{t-k}-E(Y_{t-k}))] \\ 
+			&=E[(Y_t-\mu)(Y_{t-k}-\mu)]\\
+			&=\gamma_k \label{sco} \quad k=1,2,3,\dotsc
+		\end{align}
+
+		Here, equation \eqref{eqm} and \eqref{eqv} implies that weakly stationary process is characterized by constant finite mean and variance. On the other hand, \eqref{sco} implies that covariance between any two time periods does not depend on the time period they are in, rather it depends on the time lag between these two variables. 
+\subsection{Autocovariances}	
+	Since here we are trying to find covariance between two variables where one is the lag version of the same variable, we call these \textbf{autocovariances}. Here we define the \textbf{k-th order autocovariance} as:
+		\begin{equation}
+			\gamma_k=Cov(Y_t,Y_{t-k})=Cov(Y_{t-k},Y_t)
+			\label{sco2}
+		\end{equation}
+When $k=0$, $\gamma_k$ reduces to:
+		\begin{equation}
+			\gamma_0=Cov(Y_t,Y_t)=Var(Y_t)
+			\label{gam0}
+		\end{equation}
+
+\subsection{Autocorreation}		
+	One problem with covariance its value is not independent of the units in which the variables are measured. For example, $Cov(Y_1,Y_5)$  and $Cov(Y_12, Y_16)$ might not equal just because units are different. For example, let's say $Y_t$ is measuring the CPI. In early time periods, CPI usually had lower values but suddenly it got a shift in later time periods. It's better to use correlation measure which is unit free, obviously we will use \textbf{autocorrelation} which standardizes to compare across different series. Here we will derive $\rho_k$ which is the k-th order autocorreation:
+		\begin{align}
+			\rho_k & =\frac{Cov(Y_t,Y_{t-k})}{\sqrt{Var(Y_t)}\sqrt{Var(Y_{t-1})}} \\
+			& =\frac{\gamma_k}{\gamma_0} \quad (\text{by}\quad \eqref{gam0})
+			\label{eqrho}
+		\end{align}
+Obviously, here $\rho_0=\frac{Cov(Y_t,Y_t)}{\gamma_0}=\frac{Var(Y_t)}{\gamma_0}=\frac{\gamma_0}{\gamma_0}=1$. And also as usual, $-1\le \rho_k \le 1 $ which is standard for autocorrelation measures.
+		
+\subsection{Autocorrelation Function(ACF)} 
+Autocorrelations as a function of lag order $(k)$ is called autocorrelation function or ACF. ACF plays a major role in understanding a time series. It tells us how deep is the memory of the underlying stochastic process. If it has long memory, as in the case of $AR(1)$, we would see that value of $\rho_k$ does not diminish to zero with increasing value of $k$ as quickly as the $MA(1)$ does.We already have seen that in section \ref{sscovma} that covariance between two periods, in a $MA(1)$ process, reduces to zero if  lag is just more than one period. Therefore by looking into the ACF we can have a fair idea about the underlying time series stochastic process. 
+\subsubsection{$ACF$ of $AR(1)$ and $MA(1)$}\label{sssarma}
+We have just previously seen that we can express autocorrelation of order $k$ as :
+\begin{equation}
+	\rho_k=\frac{\gamma_k}{\gamma_0}
+	\label{}
+\end{equation}
+In the case of $AR(1)$, we have seen that in one of the previous equations that:
+\begin{align}
+	Cov(Y_t,Y_{t-k}) & =\rho_k \\
+			& =\theta^k \frac{\sigma^2}{1-\theta^2} \\
+			&=\theta^k \gamma_0 \\
+	\intertext{And, we also have seen that}
+	Var(Y_t) & =\gamma_0=\frac{\sigma^2}{1-\theta^2}\\
+	\intertext{So, we can say that, in the case of $AR(1)$}
+		\rho_k & =\frac{\gamma_k}{\gamma_0} \\
+			&=\theta^k \frac{\cancel{\gamma_0}}{\cancel{\gamma_0}}
+			&=\theta^k
+	\label{}
+\end{align}
+
+Ikn the case of $MA(1)$, we also have seen previously that :
+\begin{align}
+	\gamma_1 & =Cov(Y_t,Y_{t-1})=\alpha \sigma^2,\quad text{and}\\
+	\gamma_0 & =Var(Y_t)= \sigma^2 (1+\alpha^2) \\
+	\intertext{Therefore, from the above two we can write}
+	\rho_1 & =\frac{\gamma_1}{\gamma_0} \\
+	&=\frac{\alpha \cancel{\sigma^2}}{\cancel{\sigma^2}(1+\alpha^2)} 
+	&=\frac{\alpha}{1+\alpha^2}
+	\label{}
+\end{align}
+And in the case of $k \ge 2 $, we have also seen that $\gamma_k=0 \quad \forall k$. Therefore
+\begin{equation}
+	\rho_k=0 \quad \forall \quad k
+	\label{}
+\end{equation}
+
+Implication of the above derivation is that, a shock in $MA(1)$ will only last two period, $Y_t$ and $Y_{t-1}$ while  a shock in $AR(1)$ will affect all future observations with a decreasing effect, since $|\theta|<1$.
+\subsubsection{Graphical Representation}
+Graphs of simulatated $AR(1)$ and $MA(1)$ goes in here. 
+
+\section{General ARMA process}
+\subsection{Formulating ARMA process}
+In this section, we start to define more general autoregressive and moving average process. First we define a moving average of order q:
+\begin{equation}
+	y_t=\varepsilon_t+\alpha_1 \varepsilon_{t-1}+\alpha_2 \varepsilon_{t-2}+\dotsb+\alpha_q \varepsilon_{t-q}
+	\label{eq:maq}
+\end{equation}
+Here, $y_t=Y_t-\mu$ and $\varepsilon_t$ is a white noise process. It also means that the demeaned series $y_t$ is a weighted combination (can we say weighted average also?) of $q+1$ white noise terms. Here is $q+1$ terms since the $q$ starts from the second term. 
+On the other hand, an autoregressive process of order $p$, which is denoted as $AR(p)$, can be expressed as:
+
+\begin{equation}
+    y_t=\theta_1 y_{t-1}+\theta_2 y_{t-2}+\theta_3 y_{t-3}+\dotsb+\theta_p y_{t-p}+\varepsilon_t
+    \label{eq:arq}
+\end{equation}
+
+Obviously it is very much possible to combine the $MA(q)$ and $AR(p)$ and come up with a $ARMA(p,q)$ specification of the following form:
+\begin{equation}
+    y_t=\theta_1 y_{t-1}+\theta_2 y_{t-2}+\dotsb+\theta_p y_{t-p}+\varepsilon_t+\alpha \varepsilon_{t-1}+\dotsb+\alpha_q \varepsilon_{t-q}
+\end{equation}
+Now, the next million dollar question is  when to choose an $AR$, $MA$ or $ARMA$? Verbeek remains quite vague about this at this point. He says, $AR$ and $MA$ basically same time of series. It's just a matter of parsimony. What's the meaning of this? We have previously seen that $AR(1)$ can be expressed as infinte lag order of $MA$ series. So, what does parsimony means here? Does this mean that if we weant a smaller model then we choose $AR(1)$ over infinite order $MA$? Verbeek says it will be clear later. At this point, it is difficult to know. We will postpone the discussion for now, come back to it later. Now we will talk briefly on \textbf{Lag Operator}.
+
+\subsection{Lag operator}\label{lop}
+In the notation of time series model, it is often convenient to use lag operator($L$) or backshift operator($B$) which some author use. But we will stick to $L$ here. Let's see a use:
+\begin{equation}
+    Ly_t=y_{t-1}\\
+    L^2y_t=L.Ly_t=L.y_{t-1}=y_{t-2}\\
+    \vdots \\
+    L^q y_t=y_{t-q}
+    \label{}
+\end{equation}
+There are other relationships involving $L$, such as $L^0 \equiv 1$ and $L^{-1}=y_{t+1}$. Use of this notions makes life much simpler in specifying a long time series specification such as an $ARMA$ model quite concisely. For example, let's start with an $AR(1)$ model:
+za\begin{equation}
+    \begin{split}
+        y_t & =\theta y_{t-1}+\varepsilon_t \\
+            & =\theta L.y_t+\varepsilon_t \\
+            y_t-\theta Ly_t & = \varepsilon_t \\
+            (1-\theta L)y_t &= \varepsilon_t
+    \end{split}
+    \label{eq:eqL}
+\end{equation}
+We can refer to \ref{eq:eqL} as follows: here, $y_t$ and it's one period lag $y_{t-1}$ , on the right hand side, is a combination with weights of 1 and $-\theta(L)$ and equals a white noise process ($\varepsilon_t$). In general, we can write $AR(p)$ as follows:
+\begin{equation}
+    \theta(L)y_t=\varepsilon_t
+    \label{eq:eqargen}
+\end{equation}
+Here $\theta(L)$ is a polynomial\footnote{What's the definition of polynomila?} of order $p$ . I think $\theta(L)$ is some kind of function of $L$. We could write it like $f(L)$. Writing it like $\theta(L)$ creates some confusion because there is also $\theta$ in the function. Now, $\theta(L)$ can be expressed as: 
+\begin{equation}
+    \theta(L)=1-\theta L -\theta_2 L^2-\dotsb-\theta_p L^p
+    \label{eqlagpol}
+\end{equation}
+We can interpret lag polynomial as a filter. When we apply it to a time series, it produces a new series. 
+\subsection{Characteristics of Lag Polynomial}
+Suppose we apply a lag polynomial to a time series. Then we apply another lag polynomial on the top of that series. This is equivalent to applying product of two lag polynomial on the original series. We can also define the inverse of a filter, which is the inverse of polynomial. The inverse of $\theta(L)$ is $\theta^{-1}(L)$ and we can write $\theta(L) \theta^{-1}(L)=1$ . Now the following statement I really don't understand. 
+
+If $\theta(L)$ is a finite order polynomial, then $\theta{-1}L$ is a infinite order polynomial in $L$. It also goes onto claim that
+\begin{equation}
+    (1-\theta L)^{-1}=\sum_{j=0}^{\infty}\theta^j L^j
+    \label{eq:lagpol2}
+\end{equation}
+provided that $|\theta|<1$. Now the question is how to prove that claim? 
+Now let's start with simply $\sum_{j=0}^\infty \theta^j$. 
+\begin{align}
+    \sum_{j=0}^\infty & = \theta_0+\theta_1+\dotsb \\
+    & =\frac{1-\theta^\infty}{1-\theta} \quad \text{provided that} \quad |\theta|<1 \\
+    &=\frac{1}{1-\theta}
+    \label{eq:eqthet}
+\end{align}
+Now let's see this version:
+\begin{align}
+    \sum_{j=0}^\infty \theta^j L^j & = \theta^0 L^0+ \theta^1 L^1 + \theta^2 L^2+ \dotsb \\
+    & = 1+\theta L + \theta^2 L^2+\dotsb \\
+    & = \frac{1-(\theta L)^\infty}{1-\theta L} \\
+    & = \frac{1-\theta^\infty L^\infty}{1-\theta L} \\
+    & = \frac{1}{1-\theta L} \quad \text{by} \quad |\theta|<1\\
+    & = (1-\theta L)^{-1} \\
+    \intertext{So we find that,}
+    \sum_{j=0}^\infty \theta^j L^j & = \frac{1}{1-\theta L}=(1-\theta L)^{-1}
+    \label{eqthl}
+\end{align}
+
+Now, we have seen in \ref{eq:eqL} that $(1-\theta L)y_t=\varepsilon_t$. From this it follows that:
+\begin{align}
+    (1-\theta L)^{-1}(1-\theta L) y_t & = (1-\theta L)^{-1} \varepsilon_t \\
+    y_t & = (1-\theta L)^{-1} \varepsilon_t \\
+    \text{or,} \qquad y_t & = \sum_{j=0}^\infty \theta^j L^j \varepsilon_t \\
+    \intertext{From, the previous definition of Lag operator($L$)}
+    L\varepsilon_t & = \varepsilon_{t-1} \\
+    L^2 \varepsilon_t & =\varepsilon_{t-2} \\
+    \vdots \\
+    L^j \varepsilon_t &= \varepsilon_{t-j} \\
+    \intertext{Therefore, we can write}
+    y_t & = \sum_{j=0}^\infty \theta^j \varepsilon_{t-j}
+    \label{}
+\end{align}
+\subsection{From $MA(1)$ to AR($\infty$)}
+It corresponds to same derivation where we have shown that $AR(1)$ corresponds to $MA(\infty)$ series. We have said previously that $MA(1)$ can also be transformed into a $AR$ series but could not show it quite mathematically. Armed with lag operator $(L)$, we can try to show it here. 
+\begin{align}
+    \intertext{We know that in $MA(1)$}
+    y_t   &= \varepsilon_t+\alpha \varepsilon_{t-1} \\
+          &= \varepsilon_t+\alpha L \varepsilon_t \\
+          &= (1+\alpha L)\varepsilon_t
+(1+\alpha L)^{-1}y_t &= \varepsilon_t
+\end{align} 
+
+Now, let's see how we can define $(1+\alpha L)^{-1}$.
+
+\begin{align}
+    (1+\alpha L)^{-1} &= \frac{1}{(1+\alpha L)} \\
+    & = \frac{1-(-\alpha L)^{\infty}}{1-(-\alpha L)} \\
+    & = -\alpha L+(-\alpha L)^2+ (-\alpha L)^3+\dotsb \\
+    & = \sum_{j=0}^\infty (-\alpha L)^j \\
+    \intertext{Therfore, we write that }
+    (1+\alpha L)^{-1} & = \sum_{j=0}^\infty (-\alpha L)^j \\
+    \intertext{Basically, we see that}
+    \varepsilon_t &=\sum_{j=0}^\infty (-\alpha)^j (L)^j y_t\\
+    &=\sum_{j=0}^\infty (-\alpha)^j y_{t-j}
+    \intertext{Now, let's figure out $\varepsilon_{t-1}$. This is important since we write  $MA(1) = \alpha \varepsilon_{t-1}+\varepsilon_t$. What we will do is put the value of $\varepsilon_{t-1}$ and keep $\varepsilon_t$ as it is}
+    y_{t-1} & =\varepsilon_{t-1}+\alpha \varepsilon_{t-2} \\
+    & =\varepsilon_{t-1} + \alpha L \varepsilon_{t-1} \\
+    & =\varepsilon_{t-1}(1+\alpha L) \\
+\text{or,}\qquad \varepsilon_{t-1} & =(1+\alpha L)^{-1} y_{t-1} \\
+& = \sum_{j=0}^\infty (-\alpha L)^j y_{t-1} \\
+& = \sum_{j=0}^\infty (-\alpha)^j L^j y_{t-1} \\ 
+& = \sum_{j=0}^\infty (-\alpha)^j  y_{t-j-1} \\                    
+\intertext{So, we can write}
+\varepsilon_{t-1} &= \sum_{j=0}^\infty (-\alpha)^j  y_{t-j-1} \\                    
+\intertext{Now getting back to the $MA(1)$,}
+y_t & =\alpha \varepsilon_{t-1}+\varepsilon_t \\
+    & =\alpha \sum_{j=0}^\infty (-\alpha)^j  y_{t-j-1}+ \varepsilon_t \\ 
+\end{align}
+
+We here require that \textit{lag polynomial} in the $MA(1)$ which is $(1+\alpha L)$ is invertible. It can be shown that it is invertible only if $|\alpha|<1$. $AR$ representation is very convenient when we think that current behavior is determined by past behavior. $MA$ representation is quite useful for determining variance and covariance of the process. It is not quite clear how so but it might be clear in the subsequent analysis. 
+\subsection{Parsimonious representation of ARMA}
+We have seen previously the following $ARMA$ representation:
+\begin{gather}
+    y_t  =\theta_1 y_{t-1}+\theta_2 y_{t-2}+\dotsb+\theta_p+\varepsilon_t+\alpha \varepsilon_{t-1}+\dotsb+\alpha_q \varepsilon_{t-q} \\
+    \text{or,} \qquad y_t-\theta_1 y_{t-1}-\dotsb-\theta_p y_{t-p}  =(\alpha(L))\varepsilon \\
+\text{or,} \qquad \theta (L) y_t  =\alpha (L) \varepsilon_t \\
+\intertext{Now, if we think lag polynomical in $AR(1)$ is invertible, then}
+y_t  =\theta^{-1}(L) \alpha (L) \varepsilon_t \\
+\intertext{On the other hand, if lag polynomial in  $MA(1)$ is invertible, then we can write}
+\alpha^{-1}(L) \theta (L) y_t  =\varepsilon_t
+    \label{eq:eqpararma}
+\end{gather}
+\subsection{Invertibility of Lag Polynomial}
+\subsubsection{Generalization}
+We have seen that for the first order lag polynomical $1-\theta L$ is invertible if $|\theta|<1$. But it is not clear at this point what we mean by invertibility. Is this means whether we can find the value of $\frac{1}{1-\theta L}$? We can find the value of this expression even though $|\theta|>1$, it's just negative\footnote{Need to have a clear understanding of invertibility}. Now, whatever invertibility is, let's move onand try to generalize this condition. First start with a second order polynomial. Then we will move onto higher degree of polynomial. 
+\subsubsection{Second Order Polynomial}
+Let's consider this second order polynomial:
+    \begin{equation}
+        1-\theta_1 L-\theta_2 L^2
+        \label{eq:eq2pn}
+    \end{equation}
+    How to solve this type of question? Well this is typically a equation of the following form:
+    \begin{equation} \label{eq2gn}
+        ax^2+bx+c
+    \end{equation}
+    Here $a=-\theta_2, b=-\theta_1, c=1$. Now the typical solution for this type of equation is:
+    \begin{align}
+        x & =\frac{-b\pm \sqrt{b^2-4ac}}{2a}
+        \label{eq:eqax2}
+    \end{align}
+    Now let's think about a numerical example with the following example: 
+   
+    \begin{multline}\label{eqnumex}
+        x^2-8x+15=x^2-3x-5x+15=x(x-3)-5(x-3) \\
+             =(x-3)(x-5)=(3-x)(5-x)=15(1-x/3)(1-x/5)
+    \end{multline}
+  
+   Now let's put the above numerical example into a general mathematical form:
+   \begin{equation}\label{eqphi}
+       1-\theta_1 L-\theta_2 L^2=(1-\varphi_1 L)(1-\varphi_2 L)
+   \end{equation}
+   Now if we look into \eqref{eqphi} and compare it with \eqref{eqnumex}, we find that $\varphi_1=1/3$ and $\varphi_2=1/5$. But the presence of $15$ complicates the matter. Anyway, let's whether we can resolve the issue or not. Author says that we can write $\varphi_1+\varphi_2=\theta_1$.It sounds like for the usual quadratic equation formula in \eqref{eq2gn} there is some relation. 
+   
+   Now look into \eqref{eqnumex} to relate itto the numerical example we have. If we think $\varphi_1=1/3$ and $\varphi_2=1/5$, then $\varphi_1+\varphi_2=1/3+1/5=\frac{5+3}{15}=8/15$. Now we see what complicates the situation, its the $15$. If we compare \eqref{eqnumex} and \eqref{eqphi}, then we can say that $\theta_1=8$. Then $\varphi_1+\varphi_2=8/15$ does not quite equal to $15$. But if we multiply it by $15$ then $\frac{\cancel{15}}{8/\cancel{15}}=8$. 
+   
+   The relationship is also such that $-\varphi_1 \varphi_2= \theta_2$. Now let's check whether this holds. We have $1/3 \cdot 1/5=1/15$. But again we have to multiply by $15$ to get the desired result. Hence we get $1$ which is equivalent to $\theta_2=1$ which is the coefficient of $x^2$ in \eqref{eqnumex}.Ok that is fine. 
+  
+\subsubsection{Condition for invertibility}
+   But the part that I don't understand is the condition for invertibility in the polynomial. It says that the polynomial of second order in \eqref{eqphi} will be invertible if both of the first order polynomials are also invertible. The first order polynomials are: $(1-\varphi_1 L)$ and $(1-\varphi_2 L)$ . These two have to be also invertible for the whole quadratic polynomial to be invertible \footnote{Have to look for details here.}. This implies that both $\varphi_1$ and $\varphi_2$ has to be less than one, that is :
+   \begin{equation}
+       |\varphi_1| < 1 \qquad \text{and} |\varphi_2| < 1
+       \label{eqphi2}
+   \end{equation}
+  
+   Why this is so is not clear. Have to look into greater details. Anyways, author moves on to say that these requirements can also be formulated in terms of the so-called \textbf{characteristics equation}. Does it mean that charateristic equation is another way to mention this requirements of invertibility? Anyway, let's first specify the characteristic equation:
+   \begin{equation}
+       (1-\varphi_1 z)(1-\varphi_2 z)=0
+       \label{eqphi3}
+\end{equation}
+When we look into this equation, the first thing that comes to mind is that why we are suddenly using $z$ instead of $L$ as we have done in \eqref{eqphi}.Well, my guess is that, it has been probably done to give a more generic look of the chracteristic equation. That's the only explanation I can find here.
+
+Solution of the equation in \eqref{eqphi3} can be expressed by two values of $z$: $z_1$ and $z_2$. These are called \textbf{characteristic roots}.Why this is called characteristic equation or characteristic roots? Now the invertibility condition requires that $|\varphi_i|<1$ which translates into $|z_i>1|$. If any solution that satisfies $|z_i|\ge 1$ will result into a non-invertible polynomial. If $|z_i|$ is exactly equal to $1$, then that solution is referred to as \textbf{unit root}. 
+
+\subsubsection{Invertibility with lag polynomial coefficients}
+Here the author discusses an easier to detect the presence of unit root in a lag polynonmial. Remember, here we are talking about lag polynomial not the equation itself. It may create some confusion in the beginning. It certainly did in my case. Now the statement that confused me is the following:
+
+We can detect the presence of unit root by noting that the polynomial $\theta(z)$ evaluated at $z=1$ is zero if $\sum_{j=1}^{p} \theta_j=1$. Thus the presence of a first unit root can be verified by checking whether the sum of polynomial coefficients equals one. If the sum exceeds one, the polynomial is not invertible. 
+
+Now have a look at the above statement and try to evaluate it with the following example. We are considering the following $AR(2)$ model:
+
+\begin{equation}\label{eqexm}
+    y_t=1.2 y_{t-1} - 0.32 y_{t-2}+\varepsilon_t 
+\end{equation}
+
+Now having a look at this equation \eqref{eqexm}, we might think that $\sum_{j=1}^{2}=1.2+(-0.32)=0.70$ which is less than one. This might work just fine. We can express this equation a little bit more elaborately in the lag polynomial form: 
+
+\begin{gather}\label{eqexm2}
+    y_t =1.2 L y_t-0.32 L^2 y_t+\varepsilon_t \\
+    y_t(1-1.2L+0.32 L^2)=\varepsilon_t
+    \intertext{We can also write this as}
+    y_t(1-0.8L-0.4L+0.32L^2)=\varepsilon_t \\
+    y_t[(1-0.8L)-0.4L(1-0.8L)]=\varepsilon_t \\
+    y_t(1-0.8L)(1-0.4L)=\varepsilon_t 
+    \intertext{This corresponds to the characteristics equation of the following form:}
+    1-1.2z+0.32z^2=(1-0.4z)(1-0.8z)=0
+\end{gather}
+Now let's revisit the following statement and try to relate it with the above statement:
+We can detect the presence of unit root by noting that the polynomial $\theta(z)$ evaluated at $z=1$ is zero if $\sum_{j=1}^{p} \theta_j=1$. Thus the presence of a first unit root can be verified by checking whether the sum of polynomial coefficients equals one. If the sum exceeds one, the polynomial is not invertible. 
+
+Now let's check what would be the value of characteristics equation when evaluated at $z=1$. 
+\begin{gather}
+    1-1.2z+0.32z^2=1-1.2(1)+0.32(1)^2=1-1.2+0.32=1-0.70=0.30
+\end{gather}
+
+We find the value of characteristics equation becomes $0.30$ when z=1. When this value will become $0$? Now to see that let's consider the equation when this value might become zero. How about this equation:
+
+\begin{equation}\label{eqexmv2}
+    y_t=1.2y_{t-1}-0.2y_{t-2}+\varepsilon_t
+\end{equation}
+
+Here some of the coefficeints in the lag polynomial will be $1.2-0.2=1$. Now what is wrong with that? Now the left hand side of the chracteristics equation with $z=1$ will be:
+\[1-1.2z+0.2z=1-1.2+0.2=0\]
+Here we see that when sum of the coefficients of the polynomial is $1$, then value of the polynomial is zero when $z=1$. 
+
+\subsubsection{Consequences of Invertibility}
+Now what's the consequence of this? It's still not clear to me. In this case of a simple example it is obvious. For example:
+\begin{equation}\label{eqrw}
+    y_t=1.2y_{t-1} +\varepsilon_t
+\end{equation}
+
+Here, lag polynomial is much simpler: $1-1.2L$. Sum of the lag polynomial here is $1.2$ where there is only first degree lag, so we have just one term here. It is greater than $1$, so it must be invertible. The real signficance of invertibility is that the series becomes non-stationary. At least that what I understood. The border line case is \textbf{random walk} the value of lag coefficient is 1.
+\[y_t=y_{t-1}+\varepsilon_t\]
+
+The issue of whether lag polynomials are invertible or not is important for serveral reasons.For moving average models, it is important for estimation and predictions. For the autoregressive models, we already mentioned, it's ensures stationarity. 
+
+\subsection{Common Roots}   
+Now here we will talk about common roots. Let's have a look into the $ARMA(2,1)$ process of the following form: 
+\begin{gather} \label{}
+	y_t=\theta_1 y_{t-1}+\theta_2 y_{t-2}+ \varepsilon_t + \alpha_1 \varepsilon_{t-1} \\
+	y_t=\theta_1 L.y_t+\theta_2 L^2 y_t+\varepsilon_t+\alpha_1 L.\varepsilon_t \\
+	y_t[1-\theta_1 L -\theta_2 L^2]=\varepsilon_t[1+\alpha_1 L]\\
+	y_t(1-\varphi_1L)(1-\varphi_2 L)=\varepsilon_t(1+\alpha_1 L)\\
+	\intertext{Now, if $\alpha_1=-\varphi_1$}
+	y_t(1+\alpha_1 L)(1-\varphi_2 L)=\varepsilon_t(1+\alpha_1 L)\\
+	y_t \cancel{(1+\alpha_1 L)}(1-\varphi_2 L)=\varepsilon_t\cancel{(1+\alpha_1 L)}
+	y_t(1-\varphi_2 L)=\varepsilon_t
+\end{gather}
+
+In the above we see that we start with a process $ARMA(2,1)$ and end up with a $ARMA(2-1,1-1)$ or $AR(1)$ process. Because fo the cancelling root, it seem they are equivalent which is wrong. In general. becasue of one canceling root $ARMA(p,q)$ can be written as $ARMA(p-1, q-1)$. 
+
+An example can better illustrate the situation but above explantion might suffice here. The issue is that with a common cancelling root it is difficult to identify which one is the real underlying stochastic process. 
+
+\part{Notes from Cointegration.pdf file }
+\section{Introduction}
+For regression analysis to be performed, data has to be stationary. Or the equation has to be rewritten in such a form that indicates a relationship among stationary variables. 
+
+What is stationary? Stationarity referes to a situation where the underlying stochastic process that generates the data is invariant with respect to time. On the other hand, if the characteristics over the time changes we call it a non-stationary process. 
+
+Now the obvious question is what are the characteristics that has to be invariant? We can list it in the following manner:
+ mean
+ variance
+ covariance  etc
+ 
+ If a series is stationary then we can model it via an equation with fixed coefficents estimated from the past data. 
+ 
+\section{Conditions for Stationarity}
+ Let us assume a stochastic time series $y_1, y_2, ...... y_T$ where there are T observations. Now a stochastic process is weakly stationary if
+ 
+ \begin{itemize}
+    \item $ E(y_t)$ is independent of t 
+    \item $Var(y_t)$ is not only independent of t but also constant 
+    \item $Covar(y_t, y_s)$ depends on (t-s) but not on t or s 
+ \end{itemize}
+ 
+Now let us elaborate on the whole issue:
+ 
+ \textbf{\normalsize{$E(y_t)$ is independent of t}} 
+
+What it means is that a stationary series must have a constant mean. That is it should revert back to the mean. It many wonder around here and there but it should have an tendency to come back to the mean. That means the series should show certain amount of randomness around its mean with respect to time. 
+ 
+ This also implies that expected value will be the same in each time period. Is that true? Think about a stationary time series: change in the stock prices. Does this mean that expected change in the stock price will be the same in each time period? Is this a realistic thing to expect?
+ 
+ Let's take a look into an example which might generate stable series:
+ 
+ An AR(1) process:
+ 
+ $$y_t=\alpha+\beta_1*y_{t-1}+e_t $$
+ 
+ If the process has to be stationary then we should have
+ \begin{align*}
+ E(y_t)&=E(y_{t-1}) \\
+ E(y_t)&=\alpha+\beta_1 \times E(y_{t-1})\\
+ E(y_t)-\beta_1 \times E(y_{t-1})&=\alpha \\
+ E(y_t)-\beta_1 \times E(y_t)&=\alpha \qquad [since~ E(y_t)=E(y_{t-1})] \\
+ E(y_t)&=\frac{\alpha}{1-\beta_1}
+ \end{align*}
+ 
+It says that a stable mean requires that $\beta_1$ must be less than 1, that $$\beta_1 <1$$. Not sure why it says that. What does that mean to be stable? Need to have further elaboration.
+ 
+ \textbf{\normalsize{$Var(y_t)$ is a constant and independent of $t$}} 
+ 
+ Usually exchange rate and stock prices tend to have an non-constant variance. 
+ 
+ \textbf{\normalsize{$Cov(y_t, y_s)$ depends on $(t-s)$ but not on $t$ or $s$}}
+ 
+ This means that covariance depends on the time difference of observation, not the actual time period they are observed. For example, 
+ $Cov(y_1, y_4)=Cov(y_{12}, y_{15})$ because they are both three time periods apart. 
+ 
+\subsection{Some defintion}
+ A stationary series is integrated of order zero. Because it has to be differenced zero times.A non-stationary series is integrated of order $d$. That means it has to be differenced $d$ times to make a series stationary. It is usually common to find macroeconomic data to integrated of order(1). That is macroeconomic time-series like GDP, Investment, exports are non-stationary.
+ 
+\section {Spurious Regression}
+ In a famous paper, Granger and Newbold(1974) introduced the notion of Spurious Regression. They are the one who first warned that macroeconomic regression has highly autocorrelated residual. That means regression are violating assumptions of no autocorrelations. 
+ 
+ In this situation, statistical inference goes haywire. We usually find statistically significant relationship among variables. For example, we might find inflation is affected by temperature and that is statistically significant which is totally absurd. 
+ 
+ In general,regression involving two integrated time series of the same  order yields significant relationship which is called spurious regression. This is characterized by high $R^2$, significant $t$ but this has no meaning. But this does not apply to cointegration which is a special case. We will elaborate on this later. 
+ 
+ A spurious regression is like this:
+ 
+ $$y_t=\alpha+\beta_1  x_t+ \epsilon_t$$
+ 
+ Here $y_t$ and $x_t$ are both integrated time series. In this situation, the formula of OLS estimator $\beta_1$ in the denominator has $\frac{\sum_{i=1}^{n}{(x^2-\bar{x})}}{T}$  or $\sum_{i=1}^{n}{(x^2-\bar{x})}/T$ does not converge to any limiting value. As a result OLS estimators are not consistent and as a result usual inference procedure becomes invalid. 
+ 
+ In a Monte Carlo study, Granger and Newbold(1974), created two non-staionary random walks $y_t$ and $x_t$ that were uncorrelated with each other. Then they regressed  $y_t$ on $x_t$ and found that in the 75 percent of the cases, there is significant relationship. 
+ 
+ That means in the 75 percent of the cases a spurious relationship was found. Then Granger and Newbold(1974) concluded that such regressions are characterized by  high $R^2$, low DW statistics and the t-stats are misleading.
+ 
+ Phillips(1986) provided the theoretical proof of the Granger and Newbold experiment. The initial solution to this problem was to first difference. But eventually researchers looked for alternative methods. They first look for cointegration between $y$ and $x$.  
+ 
+ \subsection*{First Difference}
+The first difference form of the regression would be: 
+$$\Delta y_t=\alpha_1+\beta_1 y_t+v_t$$
+$$where \quad v_t=\epsilon_t-\epsilon_{t-1}$$
+
+It says that if the original error is not serially correlated then the differenced error $v_t$ is MA(1). I have to check later how this is possible. Anyway, in this case OLS is unbiased but inefficient. This is due to the new error being MA(1).Granger and Newbold(1974)further showed that it does not distort hypothesis testing. Meaning hypothesis testing still owrks. 
+
+The strong message here is that we should take great care using non-stationary time series in levels. Then it says that the real message is that we cannot conduct inference unless we detrend the data. Now at this
+point I get a little confused. Why suddenly detrending gets important? May be the following analysis will shed some light.
+\section{Detrending Data}
+It has been already established that statiscal properties of OLS hold only when the underlying stochastic process is stationary. Data is stationary or the stochastic process is stationary? Are they the same thing? Data is realization of one particular instance of the underlying stochastic process. Then how they are the same?
+
+Now it says that data must have the trend removed before they can be used. There are two common approaches to this:
+
+-detrending using a time trend or some deterministic function of time
+- using differences
+
+Question is which approach is the best?
+
+It depends on the source of non-stationarity. If the non-stationarity stems from the trending pattern, then obviously we should go for detrending with a time trend.
+
+On the other hand, if non-stationarity stems from stochastic or random behaviour then obviously the first approach will not work. In that case, the differncing has to be employed. 
+
+\subsection{Deterministic Trends}
+We assume that the process is driven by a deterministic trend. Why the term deterministic?  Deterministic here probably means there is a specific pattern to it. It addition to deterministic trend, there is also a random component to it. It it's a linear trend, then it's easy to take care. Let's start with a generic expression:
+
+$$y_t=f(t)+ \epsilon_t $$
+$$ \epsilon_t \sim iid(0,\sigma^2)$$
+Now if we consider a linear trend, then
+
+$$y_t= \alpha+\beta* t+ \epsilon_t $$
+
+The least square residual from the above equation is a detrended stationary series which can be used in the regression analysis. 
+
+$$\hat{\epsilon}_t=y_t-\hat{\alpha}-\hat{\beta}t$$
+
+Time series that can detrended in this manner is called \textbf{trend stationary process} (TSP). 
+
+But there is another type of non-stationarity which simply does not go away with detrending. This is the type of non-stationarity that was mentioned by Granger and Newbold (1974). If we still detrend it and use in the regression, it does not help actually. It is called stochastic  trending behaviour. 
+
+Integrated process that was mentioned in Granger and Newbold(1974) display stochastic trend. 
+
+\subsection*{Stochastic Trend}
+
+A very common model which shows stochastic trend is random walk model. 
+
+$$y_t = \alpha+y_{t-1}+\epsilon_t$$
+
+$$where \quad \epsilon_t \sim iid(0,\sigma^2)$$
+
+By direct substitution, we get
+\begin{align*}
+y_{t-1}&=\alpha+y_{t-2}+\epsilon_{t-1} \\
+y_t&=\alpha+y_{t-1}+\epsilon_t \\
+\mbox{Now we can put the value of } y_{t-1}  \mbox{ in the above equation}\\
+y_t&=\alpha+\alpha+y_{t-2}+\epsilon_{t-1}+\epsilon_t \\
+&=\alpha \cdot 2+y_{t-2}+\epsilon_{t-1}+\epsilon_t \\
+&=\alpha \cdot 3+y_{t-3}+\epsilon_{t-2}+\epsilon_{t-1}+\epsilon_t \\
+&=\sum_{i=0}^\infty(\alpha+\epsilon_{t-i})
+\end{align*}
+
+That means random walk process is essentially infinite sum of random variables with a non-zero mean. What is this non-zero mean?
+
+$$E(y_t)=t\alpha \quad where \quad E(\epsilon_{t-i})=0$$
+
+We clearly see that the mean depends on $t$, so it is non-staionary. This  series can be turned into stationary process by simply taking the first difference. Then
+
+$$y_t-y_{t-1}=\alpha+\epsilon_t $$
+
+The L.H.S is clearly  stationary since it is composed of only a constant and a random component. A series which can be tunred into stationary by differencing is called I(1) or difference stationary process (DSP).
+
+Problem is that TSP and DSP can behave in the same manner. So it is difficult to know which is the underlying fact. That is why it might be difficult to say it from the visual inspection. 
+
+Tracing the DSP and TSP process
+
+DSP:
+\begin{align*}
+y_1=y_0+\beta+\epsilon_1 \\
+y_2=y_1+beta+\epsilon_2 \\
+   =y_0+2*beta+\epsilon_1+\epsilon_2 \\
+\vdots \\
+y_t=y_0+\beta*t+\epsilon_1+\epsilon_2+\ldots+\epsilon_t \\
+\mbox{We can write the above equation in the following form:} \\
+y_t=y_0+\beta t+v_t \\
+where \quad  v_t=\sum_{i=1}^{t}\epsilon_t
+\end{align*}
+
+TSP:
+\begin{align*}
+y_t=\alpha+\beta*t+\epsilon_t \\
+\mbox{We start from t=0} \\
+y_0=\alpha+\beta*0+\epsilon_0 \\
+ =\alpha+\epsilon_0 \\
+y_1=\alpha+\beta*1+\epsilon_1 \\
+ =\alpha+\beta+\epsilon_1  \\
+= y_0 -\epsilon_0+\beta+\epsilon_1 \\
+y_2=\alpha+\beta*2+\epsilon_2  \\
+=y_0-\epsilon_0+\beta*2+\epsilon_2 \\
+\vdots \\
+y_t=y_0+\beta t+\epsilon_t \quad assuming \quad \epsilon_0=0
+\end{align*}
+So, what we get is this: \\
+\begin{center} DSP is $y_t=y_0+ \beta t+v_t $,\end{center} on the other hand, \\
+\begin{center}TSP is $y_t=y_0+\beta t+\epsilon_t$ \end{center}
+
+So the difference stems from the error component. In DSP, the error component is non-stationary since $var(v_t)=\sigma^2t$. This example clearly shows that if we treat DSP as TSP, then we run into problem. This happens because in TSP, we use the residual but if it is DSP, then it remains non-stationary. 
+
+\section{Unit Root Testing}
+Since it is very important to learn whether a series is stationary or not, how do we know that? Then comes the question of testing for stationarity and it has become known as \textbf{Unit Root Testing}.
+
+To see why these are called Unit root tests we have to briefly overview what is root in a polynomial equation.Let's think about a AR(1) process in the following form:
+
+          $$ y_t=\alpha y_{t-1}+\epsilon_t $$
+
+We can write this in the lag operator form as:
+
+          $$y_t=\alpha L.y_t+\epsilon_t$$
+          $$y_t-\alpha L.y_t=\epsilon_t$$
+          $$y_t(1-\alpha L)=\epsilon_t$$
+          $$y_t=\frac{\epsilon_t}{1-\alpha L}$$
+
+
+
+
+
+\section{VAR}
+In JW, we got a nice example that explains VAR intuitively. It's on page 658, Example 18.8:
+$$ unemp_t= 1.304 + 0.647 unemp_{t-1}+ .184 inf_{t-1} $$
+
+Unemployment at time \textit{t} depends on previous period's inflation and unemployment. This might be just one equation in VAR. Now if we want to know whether inflation depends on unemployment we can have a similar equation. This will be a two-equation VAR.
+
+
+
+\part{R and Time series}
+\section{Show Data}
+This is the copertweight book. Introductory Time Series with R.
+
+<<echo=True>>=
+data(AirPassengers)
+AP <- AirPassengers
+@
+
+%This is how we have loaded the data. 
+%\subsection{Show Figure}
+%Now let's try to draw the plot.
+%\begin{figure}
+%\begin{center}
+%<<fig=TRUE, width=7, height=7, echo=TRUE>>=
+%plot(AP)
+%@
+%\end{center}
+%\caption{First Time series plot}
+%\end{figure}
+%This is how we have plotted the data.
+%Let's first start with installing  the required packages.
+%<<>>=
+%.libPaths("E:\\Frequently Used\\Research\\Current Research\\R\\library")
+%#.libPaths("/home/nabeel/myStuff/library")
+%#.libPaths("C:\\Users\\rushadf\\Dropbox\\library")
+%require(forecast)
+%require(fpp)
+%@
+
+\part{Notes from BBTA Lecture}
+
+
+%\texttt{/home/rushad/Dropbox/Courses/BBTA/Topics/intro_ts_dc.Rnw}
+The following lecture is taken from the file in the above address
+
+\chapter{Time series patterns}
+
+\section{Types of patterns}
+  \begin{itemize}
+    \item 
+      Trend
+    \item
+      Seasonal 
+    \item
+      Cyclic
+  \end{itemize}
+
+
+  \subsection{Trend}
+
+  \begin{itemize}
+    \item 
+      A trend exists when there is a long term increase or decrease in data
+    \item
+      A trend does not have to be linear
+    \item
+      A trend might be called "changing direction" if goes from increasing trend to decreasing trend
+  \end{itemize}
+
+  \subsection{Seasonality}
+  \begin{itemize}
+    \item 
+      A seasonal pattern exists when a series is influenced by seasonal facors
+  \begin{itemize}
+    \item quarter of the year 
+    \item the month
+    \item day of the week
+  \end{itemize}
+    \item
+      Seasonality is always a fixed and known period. 
+  \end{itemize}
+
+  \subsection{Cyclic pattern}
+  \begin{itemize}
+    \item 
+      A cyclic pattern exists when data exhibits rises and falls that are not of fixed period
+    \item
+     The duration of these fluctuations is usually of at least 2 years
+  \end{itemize}
+
+  \subsection{Cyclic vs seasonal}
+  \begin{itemize}
+    \item 
+      Many people confuse cyclic behavior with seasonal behavior
+    \item
+      They are really quite different 
+    \item
+      If fluctuations are not of fixed period then they are cyclic
+    \item
+      If the period is unchanging and associated with some aspect of the calendar, then the pattern is seasonal
+      \item
+      In general, average length of cycles is longer than the length of a seasonal pattern
+      \item
+      The magnitude of cycles tends to be more variable than the magnitude of seasonal pattern
+  \end{itemize}
+
+\section{Some examples}
+
+\subsection{Monthly housing sales}
+
+\begin{figure}      
+<<hsales >>= 
+library(fpp)
+plot(hsales)
+@
+\end{figure}      
+
+\begin{itemize}
+        \item
+      Monthly sales of new one-family houses sold in the USA since 1973
+      \item
+      Showing strong seasonality within each year
+      \item
+      Some strong cyclic behavior with period about 6-10 years
+      \item
+      There is no apparent trend in the data over this period
+      \end{itemize}
+
+
+
+\begin{figure}      
+<<>>=
+plot(ustreas)
+@
+\end{figure}
+
+    \end{column}
+
+\end{document}
+
